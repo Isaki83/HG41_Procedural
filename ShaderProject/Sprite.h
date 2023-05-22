@@ -25,6 +25,9 @@ public:
 	static void SetView(DirectX::XMFLOAT4X4 view);
 	static void SetProjection(DirectX::XMFLOAT4X4 proj);
 
+	static void SetVertexShader(Shader* vs);
+	static void SetPixelShader(Shader* ps);
+
 private:
 	struct Data
 	{
@@ -32,10 +35,12 @@ private:
 		DirectX::XMFLOAT4X4 matrix[3];
 		DirectX::XMFLOAT4 param[3];
 		Texture* texture;
-		std::shared_ptr<VertexShader> vs;
-		std::shared_ptr<PixelShader> ps;
+		Shader* vs;
+		Shader* ps;
 	};
 	static Data m_data;
+	static std::shared_ptr<VertexShader> m_defVS;
+	static std::shared_ptr<PixelShader> m_defPS;
 };
 
 #endif // __SPRITE_H__

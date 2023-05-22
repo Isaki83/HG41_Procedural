@@ -1,6 +1,8 @@
 #include "Sprite.h"
 
 Sprite::Data Sprite::m_data;
+std::shared_ptr<VertexShader> Sprite::m_defVS;
+std::shared_ptr<PixelShader> Sprite::m_defPS;
 
 void Sprite::Init()
 {
@@ -80,10 +82,12 @@ float4 main(PS_IN pin) : SV_TARGET {
 	DirectX::XMStoreFloat4x4(&m_data.matrix[2], DirectX::XMMatrixIdentity());
 
 	// シェーダー
-	m_data.vs = std::make_shared<VertexShader>();
-	m_data.vs->Compile(VS);
-	m_data.ps = std::make_shared <PixelShader>();
-	m_data.ps->Compile(PS);
+	m_defVS = std::make_shared<VertexShader>();
+	m_defVS->Compile(VS);
+	m_data.vs = m_defVS.get();
+	m_defPS = std::make_shared <PixelShader>();
+	m_defPS->Compile(PS);
+	m_data.ps = m_defPS.get();
 }
 void Sprite::Uninit()
 {
@@ -138,4 +142,18 @@ void Sprite::SetView(DirectX::XMFLOAT4X4 view)
 void Sprite::SetProjection(DirectX::XMFLOAT4X4 proj)
 {
 	m_data.matrix[2] = proj;
+}
+void Sprite::SetVertexShader(Shader* vs)
+{
+	if (vs && typeid(VertexShader) == typeid(*vs))
+		m_data.vs = vs;
+	else
+		m_data.vs = m_defVS.get();
+}
+void Sprite::SetPixelShader(Shader* ps)
+{
+	if (ps && typeid(PixelShader) == typeid(*ps))
+		m_data.ps = ps;
+	else
+		m_data.ps = m_defPS.get();
 }

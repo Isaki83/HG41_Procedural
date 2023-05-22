@@ -43,6 +43,9 @@
     <Filter Include="ソース ファイル\App\Scene">
       <UniqueIdentifier>{2c3ef8df-31ef-4b70-a418-7eb71b4c4215}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\PixelShader\Procedural">
+      <UniqueIdentifier>{546efe74-a435-45c3-b6e0-ba783be02709}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Startup.cpp">
@@ -97,6 +100,9 @@
       <Filter>ソース ファイル\App\Scene</Filter>
     </ClCompile>
     <ClCompile Include="SceneLSystem.cpp">
+      <Filter>ソース ファイル\App\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneTexture.cpp">
       <Filter>ソース ファイル\App\Scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -155,6 +161,9 @@
     <ClInclude Include="SceneLSystem.h">
       <Filter>ヘッダー ファイル\App\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="SceneTexture.h">
+      <Filter>ヘッダー ファイル\App\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VS_Object.hlsl">
@@ -169,5 +178,19 @@
     <FxCompile Include="PS_Color.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
+    <FxCompile Include="PS_WhiteNoise.hlsl">
+      <Filter>リソース ファイル\PixelShader\Procedural</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_BlockNoise.hlsl">
+      <Filter>リソース ファイル\PixelShader\Procedural</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_CelluarNoise.hlsl">
+      <Filter>リソース ファイル\PixelShader\Procedural</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Noise.hlsli">
+      <Filter>リソース ファイル\PixelShader\Procedural</Filter>
+    </None>
   </ItemGroup>
 </Project>
