@@ -65,7 +65,25 @@ void SceneLSystem::Init()
 		pStack->pop();
 	});
 
-	// ~~~ 一部ルール(+,- の回転処理)は省略 ~~~
+	// +,- の回転処理
+	auto rotPFunc = [&vtx](void* arg)
+	{
+		std::stack<Param>* pStack = reinterpret_cast<std::stack<Param>*>(arg);
+		Param& top = pStack->top();
+		top.vec.x += 0.5f;
+		top.vec.y = 1.0f;
+		top.vec.z = 0.0f;
+	};
+	auto rotMFunc = [&vtx](void* arg)
+	{
+		std::stack<Param>* pStack = reinterpret_cast<std::stack<Param>*>(arg);
+		Param& top = pStack->top();
+		top.vec.x -= 0.5f;
+		top.vec.y = 1.0f;
+		top.vec.z = 0.0f;
+	};
+	lsystem.AddBehavior('+', rotPFunc);
+	lsystem.AddBehavior('-', rotMFunc);
 
 	
 	// 構築済みのルール、処理に基づいてLSystem内で頂点データを生成
@@ -90,7 +108,7 @@ void SceneLSystem::Update(float tick)
 void SceneLSystem::Draw()
 {
 	// GetObj 引数で指定された名前のデータを
-	//        テンプレート引数に指定された型に変換して取得
+	// テンプレート引数に指定された型に変換して取得
 	CameraBase* pCamera = GetObj<CameraBase>("Camera");
 	LightBase* pLight = GetObj<LightBase>("Light");
 	// シェーダー取得

@@ -26,7 +26,7 @@ void SceneRoot::ChangeScene()
 	default:
 	case SCENE_FRACTAL:	AddSubScene<SceneFractal>(); break;
 	case SCENE_LSYSTEM:	AddSubScene<SceneLSystem>(); break;
-	case SCENE_TEXTURE: AddSubScene<SceneLSystem>(); break;
+	case SCENE_TEXTURE: AddSubScene<SceneTexture>(); break;
 	}
 }
 

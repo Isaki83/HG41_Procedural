@@ -24,7 +24,7 @@ float4 main(PS_IN pin) : SV_TARGET
     float2 offset[] =
     {
         float2(-1.0f, 1.0f),
-		float2(0.0f, 1.0f),
+		float2(0.0f, 0.0f),
 		float2(1.0f, 1.0f),
 
         float2(-1.0f, 0.0f),

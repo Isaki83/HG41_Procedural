@@ -6,7 +6,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-#define APP_TITLE "SP31 Shader"
+#define APP_TITLE "Procedural"
 
 // âÊñ ÉTÉCÉY
 #define SCREEN_WIDTH (1280)
