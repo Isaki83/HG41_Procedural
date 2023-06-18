@@ -187,6 +187,21 @@
     <FxCompile Include="PS_CelluarNoise.hlsl">
       <Filter>リソース ファイル\PixelShader\Procedural</Filter>
     </FxCompile>
+    <FxCompile Include="PS_ValueNoise.hlsl">
+      <Filter>リソース ファイル\PixelShader\Procedural</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_PerlinNoise.hlsl">
+      <Filter>リソース ファイル\PixelShader\Procedural</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_fBM.hlsl">
+      <Filter>リソース ファイル\PixelShader\Procedural</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_SolidTexture.hlsl">
+      <Filter>リソース ファイル\PixelShader\Procedural</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_LocalPosition.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Noise.hlsli">

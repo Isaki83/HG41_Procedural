@@ -3,8 +3,6 @@
 #include "CameraBase.h"
 #include "LightBase.h"
 
-using namespace DirectX;
-
 void SceneTexture::Init()
 {
 	m_time = 0.0f;
@@ -14,22 +12,93 @@ void SceneTexture::Init()
 		"Assets/Shader/PS_WhiteNoise.cso",
 		"Assets/Shader/PS_BlockNoise.cso",
 		"Assets/Shader/PS_CelluarNoise.cso",
+		"Assets/Shader/PS_ValueNoise.cso",
+		"Assets/Shader/PS_PerlinNoise.cso",
+		"Assets/Shader/PS_fBM.cso",
+		"Assets/Shader/VS_LocalPosition.cso",
+		"Assets/Shader/PS_SolidTexture.cso",
 	};
 	Shader* shader[] = {
 		CreateObj<PixelShader>("PS_WhiteNoise"),
 		CreateObj<PixelShader>("PS_BlockNoise"),
 		CreateObj<PixelShader>("PS_CelluarNoise"),
+		CreateObj<PixelShader>("PS_ValueNoise"),
+		CreateObj<PixelShader>("PS_PerlinNoise"),
+		CreateObj<PixelShader>("PS_fBM"),
+		CreateObj<VertexShader>("VS_LocalPosition"),
+		CreateObj<PixelShader>("PS_SolidTexture"),
 	};
 	for (int i = 0; i < _countof(shaderPath); ++i)
 		shader[i]->Load(shaderPath[i]);
 
+	// —§•û‘Ìì¬
+	Vertex cvtx[] = {
+		// ã‚Ì–Ê
+		{{-0.5f, 0.5f,  0.5f}, {0.0f, 1.0f, 0.0f},},
+		{{ 0.5f, 0.5f,  0.5f}, {0.0f, 1.0f, 0.0f},},
+		{{-0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f},},
+		{{ 0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f},},
+		// ‰º‚Ì–Ê
+		{{-0.5f, -0.5f,  0.5f}, {0.0f, -1.0f, 0.0f},},
+		{{ 0.5f, -0.5f,  0.5f}, {0.0f, -1.0f, 0.0f},},
+		{{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f},},
+		{{ 0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f},},
+		// Žè‘O‚Ì–Ê
+		{{-0.5f,  0.5f, 0.5f}, {0.0f, 0.0f, 1.0f},},
+		{{ 0.5f,  0.5f, 0.5f}, {0.0f, 0.0f, 1.0f},},
+		{{-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f},},
+		{{ 0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f},},
+		// ¶‚Ì–Ê
+		{{ 0.5f,  0.5f, -0.5f}, {1.0f, 0.0f, 0.0f},},
+		{{ 0.5f,  0.5f,  0.5f}, {1.0f, 0.0f, 0.0f},},
+		{{ 0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f},},
+		{{ 0.5f, -0.5f,  0.5f}, {1.0f, 0.0f, 0.0f},},
+		// ‰œ‚Ì–Ê
+		{{-0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f},},
+		{{ 0.5f,  0.5f, -0.5f}, {0.0f, 0.0f, -1.0f},},
+		{{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f},},
+		{{ 0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f},},
+		// ‰E‚Ì–Ê
+		{{-0.5f,  0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f},},
+		{{-0.5f,  0.5f,  0.5f}, {-1.0f, 0.0f, 0.0f},},
+		{{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f},},
+		{{-0.5f, -0.5f,  0.5f}, {-1.0f, 0.0f, 0.0f},},
+	};
+	UINT idx[] = {
+		 0, 1, 2,  1, 3, 2,
+		 4, 5, 6,  5, 7, 6,
+		 8, 9,10,  9,11,10,
+		12,13,14, 13,15,14,
+		16,17,18, 17,19,18,
+		20,21,22, 21,23,22,
+	};
+	MeshBuffer::Description cdesc = {};
+	cdesc.pVtx = cvtx;
+	cdesc.vtxSize = sizeof(Vertex);
+	cdesc.vtxCount = _countof(cvtx);
+	cdesc.pIdx = idx;
+	cdesc.idxSize = sizeof(idx[0]);
+	cdesc.idxCount = _countof(idx);
+	cdesc.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+
+	cdesc.isWrite = true;
+	memcpy(m_vtx, cvtx, sizeof(cvtx));
+
+	m_pCube = new MeshBuffer(cdesc);
 }
 void SceneTexture::Uninit()
 {
+	delete m_pCube;
 }
 void SceneTexture::Update(float tick)
 {
 	m_time += tick;
+
+	float z = -(sinf(m_time * 0.2f) * 0.5f + 0.5f);
+	m_vtx[3].pos.z = z;
+	m_vtx[12].pos.z = z;
+	m_vtx[17].pos.z = z;
+	m_pCube->Write(m_vtx);
 }
 void SceneTexture::Draw()
 {
@@ -58,9 +127,13 @@ void SceneTexture::Draw()
 	Shader* shader[] = {
 		GetObj<Shader>("PS_WhiteNoise"),
 		GetObj<Shader>("PS_BlockNoise"),
-		GetObj<Shader>("PS_CelluarNoise")
+		GetObj<Shader>("PS_CelluarNoise"),
+		GetObj<Shader>("PS_ValueNoise"),
+		GetObj<Shader>("PS_PerlinNoise"),
+		GetObj<Shader>("PS_fBM"),
 	};
 	shader[2]->WriteBuffer(0, time);
+	shader[4]->WriteBuffer(0, time);
 
 	// •`‰æ
 	Sprite::SetView(mat[1]);
@@ -76,4 +149,13 @@ void SceneTexture::Draw()
 		Sprite::SetPixelShader(shader[i]);
 		Sprite::Draw();
 	}
+
+	// —§•û‘Ì•`‰æ
+	Shader* pVS = GetObj<Shader>("VS_LocalPosition");
+	Shader* pPS = GetObj<Shader>("PS_SolidTexture");
+	XMStoreFloat4x4(&mat[0], XMMatrixTranspose(XMMatrixTranslation(0.0f, 1.0f, 0.0f)));
+	pVS->WriteBuffer(0, mat);
+	pVS->Bind();
+	pPS->Bind();
+	m_pCube->Draw();
 }

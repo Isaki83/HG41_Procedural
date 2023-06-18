@@ -45,6 +45,7 @@ float4 main(PS_IN pin) : SV_TARGET
         min_dist = min(min_dist, dist);
     }
 
-    color.rgb = pow(min_dist, 3);
+    color.rgb = pow(min_dist, 10);
+    color.rgb += float4(0.0f, 1.0f, 1.0f, 1.0f);
     return color;
 }
