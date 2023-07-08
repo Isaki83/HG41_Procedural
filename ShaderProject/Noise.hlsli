@@ -129,7 +129,7 @@ float PerlinNoise(float3 vec)
         lerp(points[0], points[1], f_uv.x),
         lerp(points[2], points[3], f_uv.x),
         lerp(points[4], points[5], f_uv.x),
-        lerp(points[6], points[6], f_uv.x),
+        lerp(points[6], points[7], f_uv.x),
     };
     
     float face[2] =
@@ -139,6 +139,17 @@ float PerlinNoise(float3 vec)
     };
     
     return (lerp(face[0], face[1], f_uv.z) + 1.0f) * 0.5f;
+}
+
+float TurbulenceNoice(float2 vec)
+{
+    float noise = PerlinNoise(vec);
+    noise = noise * 2.0f - 1.0f;
+    noise = abs(noise);
+    noise = noise * -1.0f + 1.0f;
+    return noise;
+
+
 }
 
 float fBM(float2 vec, int octaves)
@@ -158,4 +169,37 @@ float fBM(float2 vec, int octaves)
     }
     
     return n;
+}
+
+float fBMTurbulence(float2 vec, int octaves)
+{
+    const float lacunarity = 2.0f;
+    const float gain = 0.5f;
+
+    float amplitude = 0.5f;
+    float frequency = 1.0f;
+
+    float n = 0.0f;
+
+    for (int i = 0; i < octaves; i++)
+    {
+        n += TurbulenceNoice(vec * frequency) * amplitude;
+        frequency *= lacunarity;
+        amplitude *= gain;
+    }
+
+    return n;
+}
+
+float Domainwork(float2 vec, int octaves, float time)
+{
+    float noise = 0.0f;
+    noise = fBM(vec * 20 + time * 0.2f, 3) * 0.5f;
+    noise = fBM(vec * 3 + +time * 0.2f + noise, 3) * 2;
+    noise = fBM(vec * 2 + +time * 0.2f + noise * 2, 3) * 3;
+    noise = fBM(vec * 0.5f + +time * 0.2f + noise * 0.2f, 3) * 3;
+	//noise = fBM(vec *  2 + +time * 0.4f + noise * 0.8f	, 3) *        3;
+	//noise = fBM(vec *  2.0f + +time * 1.4f + noise * 0.4f	, 3) *        2;
+
+    return noise;
 }

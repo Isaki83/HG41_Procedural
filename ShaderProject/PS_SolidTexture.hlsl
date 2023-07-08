@@ -13,7 +13,7 @@ float4 main(PS_IN pin) : SV_TARGET
     float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
     
     float n = PerlinNoise(pin.localPos * 10.0f);
-    color.rgb = pow(n * 2, 10.0f);
+    color.rgb = pow(n * 2, 20.0f);
     
     return color;
 }

@@ -105,6 +105,9 @@
     <ClCompile Include="SceneTexture.cpp">
       <Filter>ソース ファイル\App\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="SceneField.cpp">
+      <Filter>ソース ファイル\App\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h">
@@ -164,6 +167,9 @@
     <ClInclude Include="SceneTexture.h">
       <Filter>ヘッダー ファイル\App\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="SceneField.h">
+      <Filter>ヘッダー ファイル\App\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VS_Object.hlsl">
@@ -201,6 +207,21 @@
     </FxCompile>
     <FxCompile Include="VS_LocalPosition.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_Field.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_Sea.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_Field.hlsl">
+      <Filter>リソース ファイル\PixelShader\Procedural</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_Sea.hlsl">
+      <Filter>リソース ファイル\PixelShader\Procedural</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_Sea2.hlsl">
+      <Filter>リソース ファイル\PixelShader\Procedural</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

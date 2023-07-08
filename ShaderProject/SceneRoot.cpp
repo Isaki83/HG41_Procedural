@@ -9,6 +9,7 @@
 #include "SceneFractal.h"
 #include "SceneLSystem.h"
 #include "SceneTexture.h"
+#include "SceneField.h"
 
 //--- íËêîíËã`
 enum SceneKind
@@ -16,6 +17,7 @@ enum SceneKind
 	SCENE_FRACTAL,
 	SCENE_LSYSTEM,
 	SCENE_TEXTURE,
+	SCENE_FIELD,
 	SCENE_MAX
 };
 
@@ -27,6 +29,7 @@ void SceneRoot::ChangeScene()
 	case SCENE_FRACTAL:	AddSubScene<SceneFractal>(); break;
 	case SCENE_LSYSTEM:	AddSubScene<SceneLSystem>(); break;
 	case SCENE_TEXTURE: AddSubScene<SceneTexture>(); break;
+	case SCENE_FIELD:	AddSubScene<SceneField>(); break;
 	}
 }
 
