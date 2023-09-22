@@ -46,6 +46,9 @@
     <Filter Include="リソース ファイル\PixelShader\Procedural">
       <UniqueIdentifier>{546efe74-a435-45c3-b6e0-ba783be02709}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\PixelShader\Field">
+      <UniqueIdentifier>{0266b4de-eb40-431a-962f-737ab9d501ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Startup.cpp">
@@ -214,13 +217,19 @@
     <FxCompile Include="VS_Sea.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
-    <FxCompile Include="PS_Field.hlsl">
-      <Filter>リソース ファイル\PixelShader\Procedural</Filter>
+    <FxCompile Include="PS_Cloud.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
     <FxCompile Include="PS_Sea.hlsl">
-      <Filter>リソース ファイル\PixelShader\Procedural</Filter>
+      <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
-    <FxCompile Include="PS_Sea2.hlsl">
+    <FxCompile Include="PS_Field.hlsl">
+      <Filter>リソース ファイル\PixelShader\Field</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_WorldPostion.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_Atomosphere.hlsl">
       <Filter>リソース ファイル\PixelShader\Procedural</Filter>
     </FxCompile>
   </ItemGroup>

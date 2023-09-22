@@ -171,6 +171,25 @@ float fBM(float2 vec, int octaves)
     return n;
 }
 
+float fBM(float3 vec, int octaves)
+{
+    const float lacunarity = 2.0f;  // ‹óŒ„«
+    const float gain = 0.5f;        // ‘‰Á
+    
+    float amplitude = 0.5f;         // U•
+    float frequency = 1.0f;         // ü”g”
+    
+    float n = 0.0f;
+    for (int i = 0; i < octaves; ++i)
+    {
+        n += PerlinNoise(vec * frequency) * amplitude;
+        frequency *= lacunarity;
+        amplitude *= gain;
+    }
+    
+    return n;
+}
+
 float fBMTurbulence(float2 vec, int octaves)
 {
     const float lacunarity = 2.0f;
